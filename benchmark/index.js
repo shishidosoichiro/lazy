@@ -57,6 +57,7 @@ console.log(result.length);
 //  new Filter(isSquareNumber),
 //  new Take(head)
 //])
+//return;
 
 //suite.add('VanillaJS', function() {
 //  const result = [];

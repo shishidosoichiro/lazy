@@ -32,19 +32,19 @@ Feed.prototype.fetch = function fetch() {
   }
   return chunk;
 };
-Feed.prototype.startFetchAsync = function fetchAsync(chunk) {
+Feed.prototype.startFetchAsync = function startFetchAsync(chunk) {
   this.index = -1;
   this.fetchAsync();
 };
 Feed.prototype.fetchAsync = function fetchAsync(chunk) {
-  const sources = this.sources;
-  const length = sources.length;
+  const iterators = this._iterators;
+  const length = iterators.length;
   while (++this.index < length) {
-    var source = sources[this.index];
-    if (source.async)
-      return source.readAsync(chunk, this._onRead);
+    var iterator = iterators[this.index];
+    if (iterator.async)
+      return iterator.nextAsync(chunk, this._onRead);
 
-    chunk = source.read(chunk);
+    chunk = iterator.next(chunk);
     if (chunk.end) return this._onEnd();
     if (chunk.next) return this.startFetchAsync();
   }

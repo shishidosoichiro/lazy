@@ -14,9 +14,10 @@ function Filter(fn, async) {
 
 
 Filter.Iterator = Iterator;
+inherits(Iterator, Through.Iterator);
 
 function Iterator(factory) {
-  this.factory = factory;
+  Through.Iterator.call(this);
   this.fn = this.fn || factory.fn;
   this.index = 0;
 }

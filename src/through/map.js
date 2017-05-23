@@ -14,9 +14,10 @@ function Mapper(fn, async) {
 
 
 Mapper.Iterator = Iterator;
+inherits(Iterator, Through.Iterator);
 
 function Iterator(factory) {
-  this.factory = factory;
+  Through.Iterator.call(this);
   this.fn = factory.fn;
 }
 Iterator.prototype.next = function next(chunk) {

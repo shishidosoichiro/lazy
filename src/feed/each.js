@@ -20,8 +20,7 @@ Each.prototype.feed = function feed(sources) {
   }
 };
 Each.prototype.feedAsync = function feedAsync(sources) {
-  this.sources = sources;
-  this.length = sources.length;
+  this._iterators = this.iterators(sources);
   this.startFetchAsync();
 };
 Each.prototype.onFeedAsync = function onFeedAsync(chunk) {

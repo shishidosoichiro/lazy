@@ -14,18 +14,15 @@ function Break(fn, async) {
 
 
 Break.Iterator = Iterator;
+inherits(Iterator, Through.Iterator);
 
 function Iterator(factory) {
-  this.factory = factory;
+  Through.Iterator.call(this);
   this.fn = this.fn || factory.fn;
   this.ended = false;
 }
 Iterator.prototype.next = function next(chunk) {
-  if (this.ended) {
-    chunk.end = true;
-    return chunk;
-  }
-  this.ended = !this.fn(chunk.data, chunk.index);
-  if (this.ended) chunk.end = true;
+  if (!this.ended) this.ended = !this.fn(chunk.data, chunk.index);
+  chunk.end = this.ended;
   return chunk;
 };

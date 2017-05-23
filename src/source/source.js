@@ -12,9 +12,6 @@ inherits(Source, Stream);
 function Source(){
   Stream.call(this);
 }
-Source.prototype.read = function read() {
-  throw new TypeError('not implemented');
-};
 Source.prototype.pipe = function pipe(feed) {
   if (!Compose) Compose = require('./compose');
   return new Compose(this, feed);
