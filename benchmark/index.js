@@ -8,10 +8,10 @@ const Lazyjs = require('lazy.js');
 const pull = require('pull-stream');
 
 // lazy-trial2
-const RangeOld = require('../src2/range');
-const TakeOld = require('../src2/take');
-const FilterOld = require('../src2/filter');
-const EachOld = require('../src2/each');
+const RangeOld = require('../src3/source/range');
+const TakeOld = require('../src3/through/take');
+const FilterOld = require('../src3/through/filter');
+const EachOld = require('../src3/feed/each');
 
 // lazy-trial2
 const Range = require('../src/source/range');
@@ -20,7 +20,7 @@ const Filter = require('../src/through/filter');
 const Each = require('../src/feed/each');
 
 // initialize
-const max = 28000;
+const max = 27000;
 const head = 100;
 function isSquareNumber(num){
   return Math.sqrt(num) === Math.floor(Math.sqrt(num));
@@ -39,24 +39,24 @@ function isPrimeNumber(){
 
 // test
 const result = [];
-//const each = new Each((data) => result.push(data))
-//each.feed([
-//  new Range(0, max),
-//  new Filter(isSquareNumber),
-//  new Take(head)
-//])
-//console.log(result.join(', '));
-//console.log(result.length);
 const each = new Each((data) => result.push(data))
-each.onEnd(() => {
-  console.log(result.join(', '));
-  console.log(result.length);
-})
-each.feedAsync([
-  new Range(0, max, 1, true),
+each.feed([
+  new Range(0, max),
   new Filter(isSquareNumber),
   new Take(head)
 ])
+console.log(result.join(', '));
+console.log(result.length);
+//const each = new Each((data) => result.push(data))
+//each.onEnd(() => {
+//  console.log(result.join(', '));
+//  console.log(result.length);
+//})
+//each.feedAsync([
+//  new Range(0, max, 1, true),
+//  new Filter(isSquareNumber),
+//  new Take(head)
+//])
 
 //suite.add('VanillaJS', function() {
 //  const result = [];
@@ -82,16 +82,15 @@ suite.add('Lodash', () => {
   .take(head)
   .forEach((data) => result.push(data))
 })
-//suite.add('lazy-trial3-old', () => {
-//  const result = [];
-//  const each = new EachOld((data) => result.push(data))
-//  each.feed([
-//    new RangeOld(),
-//    new TakeOld(max),
-//    new FilterOld(isSquareNumber),
-//    new TakeOld(head)
-//  ])
-//})
+suite.add('lazy-trial3-old', () => {
+  const result = [];
+  const each = new EachOld((data) => result.push(data))
+  each.feed([
+    new RangeOld(0, max),
+    new FilterOld(isSquareNumber),
+    new TakeOld(head)
+  ])
+})
 suite.add('lazy-trial3', () => {
   const result = [];
   const each = new Each((data) => result.push(data))

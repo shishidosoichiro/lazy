@@ -11,7 +11,7 @@ function Each(fn) {
   this.fn = fn;
 }
 Each.prototype.feed = function feed(sources) {
-  this._iterators = this.iterators(sources);
+  this.sources = sources;
   while (true) {
     var chunk = this.fetch();
     if (chunk.end) break;

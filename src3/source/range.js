@@ -14,20 +14,9 @@ function Range(start, end, step, async) {
   this.start = start = start || 0;
   this.endValue = end;
   this.step = step = step || 1;
+  this.value = start - step;
 }
-
-
-Range.Iterator = Iterator;
-inherits(Iterator, Generate.Iterator);
-
-function Iterator(factory) {
-  Generate.Iterator.call(this, factory);
-  this.start = factory.start;
-  this.endValue = factory.endValue;
-  this.step = factory.step;
-  this.value = this.start - this.step;
-}
-Iterator.prototype.fn = function range() {
+Range.prototype.fn = function range(chunk) {
   this.value += this.step;
   if (this.endValue && this.value > this.endValue) this.ended = true;
   return this.value;

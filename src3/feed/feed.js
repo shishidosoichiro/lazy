@@ -11,22 +11,13 @@ function Feed(){
   this.sources = [];
   this._onRead = this._onRead.bind(this);
 }
-Feed.prototype.iterators = function iterators(sources) {
-  const length = sources.length;
-  const iterators = new Array(length);
-  var i = -1;
-  while (++i < length) {
-    iterators[i] = sources[i].iterator();
-  }
-  return iterators;
-};
 Feed.prototype.fetch = function fetch() {
-  const iterators = this._iterators;
-  const length = iterators.length;
+  const sources = this.sources;
+  const length = sources.length;
   var i = -1;
   while (++i < length) {
-    var iterator = iterators[i];
-    var chunk = iterator.next(chunk);
+    var source = sources[i];
+    var chunk = source.read(chunk);
     if (chunk.next) break;
     if (chunk.end) break;
   }

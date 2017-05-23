@@ -11,7 +11,7 @@ function Value(fn) {
   this.res = [];
 }
 Value.prototype.feed = function feed(sources) {
-  this._iterators = this.iterators(sources);
+  this.sources = sources;
   while (true) {
     var chunk = this.fetch()
     if (!chunk) break;

@@ -10,14 +10,6 @@ function Take(max) {
   Break.call(this);
   this.max = max = max || 10;
 }
-
-Take.Iterator = Iterator;
-inherits(Iterator, Break.Iterator);
-
-function Iterator(factory) {
-  Break.Iterator.call(this, factory);
-  this.max = factory.max;
-}
-Iterator.prototype.fn = function take(data, index) {
+Take.prototype.fn = function take(data, index) {
   return index < this.max;
 };

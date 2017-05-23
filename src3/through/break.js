@@ -8,19 +8,11 @@ inherits(Break, Through);
 
 function Break(fn, async) {
   Through.call(this);
-  this.fn = fn;
+  this.fn = this.fn || fn;
   this.async = async;
-}
-
-
-Break.Iterator = Iterator;
-
-function Iterator(factory) {
-  this.factory = factory;
-  this.fn = this.fn || factory.fn;
   this.ended = false;
 }
-Iterator.prototype.next = function next(chunk) {
+Break.prototype.read = function read(chunk) {
   if (this.ended) {
     chunk.end = true;
     return chunk;
