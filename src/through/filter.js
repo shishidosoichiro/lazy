@@ -10,6 +10,7 @@ function Filter(fn, async) {
   Through.call(this);
   this.fn = this.fn || fn;
   this.async = async;
+  this.index = 0;
 }
 Filter.prototype.read = function read(chunk) {
   const res = this.fn(chunk.data, chunk.index);

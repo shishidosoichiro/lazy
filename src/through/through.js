@@ -9,10 +9,8 @@ inherits(Through, Stream);
 
 function Through(){
   Stream.call(this);
-  this.index = 0;
 }
 Through.prototype.read = function read(chunk) {
-  chunk.index = this.index++;
   return chunk;
 };
 Through.prototype.pipe = function pipe(feed) {

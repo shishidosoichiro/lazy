@@ -20,7 +20,7 @@ const Filter = require('../src/through/filter');
 const Each = require('../src/feed/each');
 
 // initialize
-const max = 29000;
+const max = 28000;
 const head = 100;
 function isSquareNumber(num){
   return Math.sqrt(num) === Math.floor(Math.sqrt(num));
@@ -75,6 +75,13 @@ each.feedAsync([
 //  .take(head)
 //  .forEach((data) => result.push(data))
 //})
+suite.add('Lodash', () => {
+  const result = [];
+  Lodash(Lodash.range(0, max))
+  .filter(isSquareNumber)
+  .take(head)
+  .forEach((data) => result.push(data))
+})
 //suite.add('lazy-trial3-old', () => {
 //  const result = [];
 //  const each = new EachOld((data) => result.push(data))
@@ -104,13 +111,6 @@ suite.add('lazy-trial3', () => {
 //    new Take(head)
 //  ])
 //}, {defer: true})
-suite.add('Lodash', () => {
-  const result = [];
-  Lodash(Lodash.range(0, max))
-  .filter(isSquareNumber)
-  .take(head)
-  .forEach((data) => result.push(data))
-})
 //suite.add('pull-stream', () => {
 //  const result = [];
 //  pull(

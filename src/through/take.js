@@ -10,6 +10,6 @@ function Take(max) {
   Break.call(this);
   this.max = max = max || 10;
 }
-Take.prototype.fn = function take(chunk) {
-  return this.index < this.max;
+Take.prototype.fn = function take(data, index) {
+  return index < this.max;
 };

@@ -19,6 +19,5 @@ Break.prototype.read = function read(chunk) {
   }
   this.ended = !this.fn(chunk.data, chunk.index);
   if (this.ended) chunk.end = true;
-  else          chunk.index = this.index++;
   return chunk;
 };

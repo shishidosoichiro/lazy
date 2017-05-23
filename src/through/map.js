@@ -14,6 +14,5 @@ function Mapper(fn, async) {
 Mapper.prototype.read = function read(chunk) {
   const res = this.fn(chunk.data, chunk.index);
   chunk.data = res;
-  chunk.index = this.index++;
   return chunk;
 };
