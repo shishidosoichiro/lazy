@@ -2,9 +2,14 @@
 
 const inherits = require('util').inherits;
 const Break = require('./break');
+const Through = require('./through');
+const Compose = require('./compose');
 
 module.exports = Take;
 inherits(Take, Break);
+Through.prototype.take = function take(num, async){
+  return new Compose([this, new Take(num, async)]);
+};
 
 function Take(max) {
   Break.call(this);

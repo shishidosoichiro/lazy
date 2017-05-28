@@ -2,9 +2,14 @@
 
 const inherits = require('util').inherits;
 const Feed = require('./feed');
+const Through = require('../through/through');
+const Compose = require('../through/compose');
 
 module.exports = Each;
 inherits(Each, Feed);
+Through.prototype.each = function each(num, async){
+  return new Compose([this, new Each(num, async)]);
+};
 
 function Each(fn) {
   Feed.call(this);

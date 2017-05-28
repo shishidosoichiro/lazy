@@ -2,7 +2,7 @@
 
 const inherits = require('util').inherits;
 const Stream = require('../stream');
-var Compose;
+const Compose = require('./compose');
 
 module.exports = Through;
 inherits(Through, Stream);
@@ -14,7 +14,6 @@ Through.prototype.iterator = function iterator() {
   return new this.constructor.Iterator(this);
 };
 Through.prototype.pipe = function pipe(feed) {
-  if (!Compose) Compose = require('./compose');
   return new Compose([this, feed]);
 };
 

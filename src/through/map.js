@@ -2,9 +2,13 @@
 
 const inherits = require('util').inherits;
 const Through = require('./through');
+const Compose = require('./compose');
 
 module.exports = Mapper;
 inherits(Mapper, Through);
+Through.prototype.map = function map(fn, async){
+  return new Compose([this, new Mapper(fn, async)]);
+};
 
 function Mapper(fn, async) {
   Through.call(this);
