@@ -39,12 +39,10 @@ function isPrimeNumber(){
 
 // test
 const result = [];
-const each = new Each((data) => result.push(data))
-each.feed([
-  new Range(0, max),
-  new Filter(isSquareNumber),
-  new Take(head)
-])
+new Range(0, max)
+.filter(isSquareNumber)
+.take(head)
+.each((data) => result.push(data))
 console.log(result.join(', '));
 console.log(result.length);
 //const each = new Each((data) => result.push(data))
@@ -100,6 +98,13 @@ suite.add('lazy-trial3', () => {
     new Filter(isSquareNumber),
     new Take(head)
   ])
+})
+suite.add('lazy-trial4', () => {
+  const result = [];
+  new Range(0, max)
+  .filter(isSquareNumber)
+  .take(head)
+  .each((data) => result.push(data))
 })
 //suite.add('lazy-trial3-async', (deferred) => {
 //  const result = [];

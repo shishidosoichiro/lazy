@@ -7,8 +7,8 @@ const Compose = require('../through/compose');
 
 module.exports = Each;
 inherits(Each, Feed);
-Through.prototype.each = function each(num, async){
-  return new Compose([this, new Each(num, async)]);
+Through.prototype.each = function each(fn){
+  return new Each(fn).feed(this.streams);
 };
 
 function Each(fn) {
