@@ -1,10 +1,11 @@
 'use strict';
 
+module.exports = Generate;
+
 const inherits = require('util').inherits;
 const Source = require('./source');
 const Chunk = require('../chunk');
 
-module.exports = Generate;
 inherits(Generate, Source);
 
 function Generate(fn, async) {
@@ -32,8 +33,9 @@ Iterator.prototype.next = function next() {
   this.chunk.end = this.ended;
   return this.chunk;
 };
-Iterator.prototype.nextAsync = function nextAsync(chunk, callback) {
+Iterator.prototype.nextAsync = function nextAsync(chunk, callback, thisArg) {
   this.callback = callback;
+  this.thisArg = thisArg;
   this.fnAsync();
 };
 Iterator.prototype._onRead = function _onRead() {
@@ -41,7 +43,7 @@ Iterator.prototype._onRead = function _onRead() {
   this.chunk.index = this.index++;
   this.chunk.next = false;
   this.chunk.end = false;
-  var callback = this.callback(this.chunk);
+  this.callback.call(this.chunk, thisArg);
 };
 Iterator.prototype.fnAsync = function fnAsync() {
   this.res = this.fn(this.index);

@@ -1,10 +1,11 @@
 'use strict';
 
+module.exports = Range;
+
 const inherits = require('util').inherits;
 const Generate = require('./generate');
 const Chunk = require('../chunk');
 
-module.exports = Range;
 inherits(Range, Generate);
 
 const endChunk = new Chunk.end();

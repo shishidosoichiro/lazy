@@ -1,9 +1,10 @@
 'use strict';
 
+module.exports = Feed;
+
 const inherits = require('util').inherits;
 const Stream = require('../stream');
 
-module.exports = Feed;
 inherits(Feed, Stream);
 
 function Feed(){

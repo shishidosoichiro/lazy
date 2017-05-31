@@ -1,5 +1,7 @@
 'use strict';
 
+module.exports = Source;
+
 const inherits = require('util').inherits;
 const Stream = require('../stream');
 const Chunk = require('../chunk');
@@ -12,6 +14,7 @@ const Each = require('../feed/each');
 const Value = require('../feed/value');
 
 module.exports = Source;
+
 inherits(Source, Stream);
 
 function Source(){
@@ -35,9 +38,9 @@ Source.prototype.map = function map(fn, async){
 Source.prototype.take = function take(num, async){
   return new Compose([this, new Take(num, async)]);
 };
-Source.prototype.each = function each(num, async){
-  return new Compose([this, new Each(num, async)]);
+Source.prototype.each = function each(fn, async){
+  return new Compose([this, new Each(fn, async)]);
 };
-Source.prototype.value = function value(num, async){
-  return new Compose([this, new Value(num, async)]);
+Source.prototype.value = function value(async){
+  return new Compose([this, new Value(async)]);
 };

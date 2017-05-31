@@ -1,18 +1,13 @@
 'use strict';
 
+module.exports = Value;
+
 const inherits = require('util').inherits;
 const Feed = require('./feed');
-const Through = require('../through/through');
-const Compose = require('../through/compose');
 
-module.exports = Value;
 inherits(Value, Feed);
-Through.prototype.value = function value(fn, async){
-  return new Compose([this, new Value(fn, async)]);
-};
 
-function Value(fn) {
-  this.fn = fn;
+function Value() {
   this.res = [];
 }
 Value.prototype.feed = function feed(sources) {

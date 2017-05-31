@@ -1,20 +1,33 @@
 'use strict';
 
+module.exports = Compose;
+
 const inherits = require('util').inherits;
 const Through = require('./through');
+const Break = require('../through/break');
+const Filter = require('../through/filter');
+const Map = require('../through/map');
+const Take = require('../through/take');
+const Each = require('../feed/each');
+const Value = require('../feed/value');
 
-module.exports = Compose;
 inherits(Compose, Through);
 
 function Compose(streams) {
   Through.call(this);
   this.streams = streams;
 }
-Compose.prototype.read = function read(chunk) {
-  throw new TypeError('not implemented');
-};
 Compose.prototype.pipe = function pipe(feed) {
   return new Compose(this.streams.concat(feed));
+};
+Compose.prototype.take = function take(num, async){
+  return new Compose(this.streams.concat(new Take(num, async)));
+};
+Compose.prototype.filter = function filter(fn, async){
+  return new Compose(this.streams.concat(new Filter(fn, async)));
+};
+Compose.prototype.each = function each(fn){
+  return new Each(fn).feed(this.streams);
 };
 
 Compose.Iterator = Iterator;

@@ -1,15 +1,11 @@
 'use strict';
 
+module.exports = Each;
+
 const inherits = require('util').inherits;
 const Feed = require('./feed');
-const Through = require('../through/through');
-const Compose = require('../through/compose');
 
-module.exports = Each;
 inherits(Each, Feed);
-Through.prototype.each = function each(fn){
-  return new Each(fn).feed(this.streams);
-};
 
 function Each(fn) {
   Feed.call(this);

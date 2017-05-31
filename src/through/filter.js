@@ -1,14 +1,11 @@
 'use strict';
 
+module.exports = Filter;
+
 const inherits = require('util').inherits;
 const Through = require('./through');
-const Compose = require('./compose');
 
-module.exports = Filter;
 inherits(Filter, Through);
-Through.prototype.filter = function filter(fn, async){
-  return new Compose([this, new Filter(fn, async)]);
-};
 
 function Filter(fn, async) {
   Through.call(this);
