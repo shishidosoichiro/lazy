@@ -24,22 +24,22 @@ Through.prototype.pipe = function pipe(feed) {
   return new Compose([this, feed]);
 };
 Through.prototype.break = function breake(fn, async){
-  return new Compose([this, new Break(fn, async)]);
+  return this.pipe(new Break(fn, async));
 };
 Through.prototype.filter = function filter(fn, async){
-  return new Compose([this, new Filter(fn, async)]);
+  return this.pipe(new Filter(fn, async));
 };
 Through.prototype.map = function map(fn, async){
-  return new Compose([this, new Mapper(fn, async)]);
+  return this.pipe(new Mapper(fn, async));
 };
 Through.prototype.take = function take(num, async){
-  return new Compose([this, new Take(num, async)]);
+  return this.pipe(new Take(num, async));
 };
 Through.prototype.each = function each(fn){
   return new Each(fn).feed(this.streams);
 };
-Through.prototype.value = function value(fn, async){
-  return new Value(fn, async).feed(this.streams);
+Through.prototype.value = function value(async){
+  return new Value(async).feed(this.streams);
 };
 
 Through.Iterator = Iterator;

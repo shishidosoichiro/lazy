@@ -20,11 +20,11 @@ function Compose(streams) {
 Compose.prototype.pipe = function pipe(feed) {
   return new Compose(this.streams.concat(feed));
 };
-Compose.prototype.take = function take(num, async){
-  return new Compose(this.streams.concat(new Take(num, async)));
+Compose.prototype.take = function take(max){
+  return this.pipe(new Take(max));
 };
 Compose.prototype.filter = function filter(fn, async){
-  return new Compose(this.streams.concat(new Filter(fn, async)));
+  return this.pipe(new Filter(fn, async));
 };
 Compose.prototype.each = function each(fn){
   return new Each(fn).feed(this.streams);

@@ -24,23 +24,23 @@ Source.prototype.iterator = function iterator() {
   return new this.constructor.Iterator(this);
 };
 Source.prototype.pipe = function pipe(feed) {
-  return new Compose(this, feed);
+  return new Compose([this, feed]);
 };
 Source.prototype.break = function breake(fn, async){
-  return new Compose([this, new Break(fn, async)]);
+  return this.pipe(new Break(fn, async));
 };
 Source.prototype.filter = function filter(fn, async){
-  return new Compose([this, new Filter(fn, async)]);
+  return this.pipe(new Filter(fn, async));
 };
 Source.prototype.map = function map(fn, async){
-  return new Compose([this, new Map(fn, async)]);
+  return this.pipe(new Map(fn, async));
 };
-Source.prototype.take = function take(num, async){
-  return new Compose([this, new Take(num, async)]);
+Source.prototype.take = function take(max){
+  return this.pipe(new Take(max));
 };
-Source.prototype.each = function each(fn, async){
-  return new Compose([this, new Each(fn, async)]);
+Source.prototype.each = function each(fn){
+  return this.pipe(new Each(fn));
 };
 Source.prototype.value = function value(async){
-  return new Compose([this, new Value(async)]);
+  return this.pipe(new Value(async));
 };
