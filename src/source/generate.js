@@ -24,7 +24,7 @@ function Iterator(factory) {
   this.async = factory.async;
   if (factory.async) this._onRead = this._onRead.bind(this);
 }
-Iterator.prototype.next = function next() {
+Iterator.prototype.next = function Iterator_next() {
   const res = this.fn(this.index);
   //return new Chunk(res, this.index++);
   this.chunk.data = res;

@@ -21,7 +21,7 @@ function Iterator(factory) {
   this.fn = this.fn || factory.fn;
   this.ended = false;
 }
-Iterator.prototype.next = function next(chunk) {
+Iterator.prototype.next = function Iterator_next(chunk) {
   if (!this.ended) this.ended = !this.fn(chunk.data, chunk.index);
   chunk.end = this.ended;
   return chunk;

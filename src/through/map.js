@@ -21,7 +21,7 @@ function Iterator(factory) {
   Through.Iterator.call(this);
   this.fn = factory.fn;
 }
-Iterator.prototype.next = function next(chunk) {
+Iterator.prototype.next = function Iterator_next(chunk) {
   const res = this.fn(chunk.data, chunk.index);
   chunk.data = res;
   return chunk;

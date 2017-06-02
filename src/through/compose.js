@@ -4,10 +4,10 @@ module.exports = Compose;
 
 const inherits = require('util').inherits;
 const Through = require('./through');
-const Break = require('../through/break');
-const Filter = require('../through/filter');
-const Map = require('../through/map');
-const Take = require('../through/take');
+const Break = require('./break');
+const Filter = require('./filter');
+const Map = require('./map');
+const Take = require('./take');
 const Each = require('../feed/each');
 const Value = require('../feed/value');
 
@@ -16,18 +16,19 @@ inherits(Compose, Through);
 function Compose(streams) {
   Through.call(this);
   this.streams = streams;
+  this.async = false;
 }
-Compose.prototype.pipe = function pipe(feed) {
+Compose.prototype.pipe = function Compose_pipe(feed) {
   return new Compose(this.streams.concat(feed));
 };
-Compose.prototype.take = function take(max){
+Compose.prototype.take = function Compose_take(max){
   return this.pipe(new Take(max));
 };
-Compose.prototype.filter = function filter(fn, async){
+Compose.prototype.filter = function Compose_filter(fn, async){
   return this.pipe(new Filter(fn, async));
 };
-Compose.prototype.each = function each(fn){
-  return new Each(fn).feed(this.streams);
+Compose.prototype.each = function Compose_each(fn){
+  new Each(fn).feed(this.streams);
 };
 
 Compose.Iterator = Iterator;
@@ -38,7 +39,7 @@ function Iterator(factory) {
   this.streams = this.streams || factory.streams;
   this._iterators = iterators(this.streams);
 }
-Iterator.prototype.next = function next(chunk, callback, thisArg) {
+Iterator.prototype.next = function Iterator_next(chunk, callback, thisArg) {
   if (isAsync(this._iterators)) return this.nextSync(chunk, callback, thisArg);
   return this.nextSync(chunk);
 };

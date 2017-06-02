@@ -22,7 +22,7 @@ function Iterator(factory) {
   this.fn = this.fn || factory.fn;
   this.index = 0;
 }
-Iterator.prototype.next = function next(chunk) {
+Iterator.prototype.next = function Iterator_next(chunk) {
   const res = this.fn(chunk.data, chunk.index);
   if (res) chunk.index = this.index++;
   else     chunk.next  = true;
