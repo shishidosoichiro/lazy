@@ -18,28 +18,28 @@ function Through(){
   Stream.call(this);
   this.async = false;
 }
-Through.prototype.iterator = function Through_iterator() {
+Through.prototype.iterator = function iterator() {
   return new this.constructor.Iterator(this);
 };
-Through.prototype.pipe = function Through_pipe(feed) {
+Through.prototype.pipe = function pipe(feed) {
   return new Compose([this, feed]);
 };
-Through.prototype.break = function Through_breake(fn, async){
+Through.prototype.break = function breake(fn, async){
   return this.pipe(new Break(fn, async));
 };
-Through.prototype.filter = function Through_filter(fn, async){
+Through.prototype.filter = function filter(fn, async){
   return this.pipe(new Filter(fn, async));
 };
-Through.prototype.map = function Through_map(fn, async){
+Through.prototype.map = function map(fn, async){
   return this.pipe(new Mapper(fn, async));
 };
-Through.prototype.take = function Through_take(num, async){
+Through.prototype.take = function take(num, async){
   return this.pipe(new Take(num, async));
 };
-Through.prototype.each = function Through_each(fn){
+Through.prototype.each = function each(fn){
   new Each(fn).feed(this.streams);
 };
-Through.prototype.value = function Through_value(async){
+Through.prototype.value = function value(async){
   return new Value(async).feed(this.streams);
 };
 

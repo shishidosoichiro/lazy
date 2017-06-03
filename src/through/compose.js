@@ -15,19 +15,19 @@ inherits(Compose, Through);
 
 function Compose(streams) {
   Through.call(this);
-  this.streams = streams;
-  this.async = false;
+  this.streams = streams || [];
+  //this.async = async === true;
 }
-Compose.prototype.pipe = function Compose_pipe(feed) {
+Compose.prototype.pipe = function pipe(feed) {
   return new Compose(this.streams.concat(feed));
 };
-Compose.prototype.take = function Compose_take(max){
+Compose.prototype.take = function take(max){
   return this.pipe(new Take(max));
 };
-Compose.prototype.filter = function Compose_filter(fn, async){
+Compose.prototype.filter = function filter(fn, async){
   return this.pipe(new Filter(fn, async));
 };
-Compose.prototype.each = function Compose_each(fn){
+Compose.prototype.each = function each(fn){
   new Each(fn).feed(this.streams);
 };
 
@@ -39,7 +39,7 @@ function Iterator(factory) {
   this.streams = this.streams || factory.streams;
   this._iterators = iterators(this.streams);
 }
-Iterator.prototype.next = function Iterator_next(chunk, callback, thisArg) {
+Iterator.prototype.next = function next(chunk, callback, thisArg) {
   if (isAsync(this._iterators)) return this.nextSync(chunk, callback, thisArg);
   return this.nextSync(chunk);
 };

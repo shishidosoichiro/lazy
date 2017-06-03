@@ -10,7 +10,7 @@ inherits(Filter, Through);
 function Filter(fn, async) {
   Through.call(this);
   this.fn = fn;
-  this.async = async;
+  this.async = async === true;
 }
 
 
@@ -22,7 +22,7 @@ function Iterator(factory) {
   this.fn = this.fn || factory.fn;
   this.index = 0;
 }
-Iterator.prototype.next = function Iterator_next(chunk) {
+Iterator.prototype.next = function next(chunk) {
   const res = this.fn(chunk.data, chunk.index);
   if (res) chunk.index = this.index++;
   else     chunk.next  = true;

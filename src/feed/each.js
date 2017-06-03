@@ -11,12 +11,12 @@ function Each(fn) {
   Feed.call(this);
   this.fn = fn;
 }
-Each.prototype.feed = function Each_feed(sources) {
+Each.prototype.feed = function feed(sources) {
   this._iterators = this.iterators(sources);
   if (isAsync(this._iterators)) return this.feedAsync();
   return this.feedSync();
 };
-Each.prototype.feedSync = function Each_feedSync() {
+Each.prototype.feedSync = function feedSync() {
   while (true) {
     var chunk = this.fetch();
     if (chunk.end) break;
@@ -24,10 +24,10 @@ Each.prototype.feedSync = function Each_feedSync() {
     this.fn(chunk.data, chunk.index);
   }
 };
-Each.prototype.feedAsync = function Each_feedAsync() {
+Each.prototype.feedAsync = function feedAsync() {
   this.startFetchAsync();
 };
-Each.prototype.onFeedAsync = function Each_onFeedAsync(chunk) {
+Each.prototype.onFeedAsync = function onFeedAsync(chunk) {
   this.fn(chunk.data, chunk.index);
   this.startFetchAsync();
 };

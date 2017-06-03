@@ -10,7 +10,7 @@ inherits(Break, Through);
 function Break(fn, async) {
   Through.call(this);
   this.fn = fn;
-  this.async = async;
+  this.async = async === true;
 }
 
 Break.Iterator = Iterator;
@@ -21,7 +21,7 @@ function Iterator(factory) {
   this.fn = this.fn || factory.fn;
   this.ended = false;
 }
-Iterator.prototype.next = function Iterator_next(chunk) {
+Iterator.prototype.next = function next(chunk) {
   if (!this.ended) this.ended = !this.fn(chunk.data, chunk.index);
   chunk.end = this.ended;
   return chunk;
