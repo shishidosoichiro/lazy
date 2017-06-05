@@ -10,7 +10,7 @@ inherits(Take, Break);
 
 function Take(max) {
   Break.call(this);
-  this.max = max = max || 10;
+  this.max = max === void 0 ? 10 : max;
 }
 
 Take.Iterator = Iterator;

@@ -3,6 +3,7 @@
 module.exports = Compose;
 
 const inherits = require('util').inherits;
+const isAsync = require('../util').isAsync;
 const Through = require('./through');
 const Break = require('./break');
 const Filter = require('./filter');
@@ -14,21 +15,14 @@ const Value = require('../feed/value');
 inherits(Compose, Through);
 
 function Compose(streams) {
-  Through.call(this);
-  this.streams = streams || [];
-  //this.async = async === true;
+  Through.call(this, false);
+  this.streams = streams === void 0 ? [] : streams;
 }
 Compose.prototype.pipe = function pipe(feed) {
-  return new Compose(this.streams.concat(feed));
+  return feed.feed(this.streams);
 };
-Compose.prototype.take = function take(max){
-  return this.pipe(new Take(max));
-};
-Compose.prototype.filter = function filter(fn, async){
-  return this.pipe(new Filter(fn, async));
-};
-Compose.prototype.each = function each(fn){
-  new Each(fn).feed(this.streams);
+Compose.prototype.feed = function feed(sources) {
+  return new Compose(sources.concat(this.streams));
 };
 
 Compose.Iterator = Iterator;
@@ -94,11 +88,3 @@ function iterators(streams) {
   }
   return iterators;
 };
-
-function isAsync(iterators) {
-  const length = iterators.length;
-  var i = -1;
-  while (++i < length)
-    if (iterators[i].async) return true;
-  return false;
-}

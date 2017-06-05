@@ -26,9 +26,9 @@ const options = {
   LazyJS: false,
   Lodash: false,
   LazyOld: true,
-  Lazy: false,
-  Lazy2: false,
-  Lazy3: true,
+  Lazy: true,
+  Lazy2: true,
+  Lazy3: false,
   LazyAsync: false,
   PullStream: false
 }
@@ -38,6 +38,11 @@ testLazy2(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })
+testLazy2(result => {
+  console.log(result.join(', '));
+  console.log(result.length);
+})
+//return
 
 const suite = new Benchmark.Suite;
 if (options.VanillaJS)  suite.add('VanillaJS', testVanillaJS);

@@ -9,20 +9,23 @@ const Compose = require('./compose');
 //const Filter = require('../through/filter');
 //const Map = require('../through/map');
 //const Take = require('../through/take');
-//const Each = require('../feed/each');
+const Each = require('../feed/each');
 //const Value = require('../feed/value');
 
 inherits(Through, Stream);
 
-function Through(){
+function Through(async){
   Stream.call(this);
-  this.async = false;
+  this.async = async == true;
 }
 Through.prototype.iterator = function iterator() {
   return new this.constructor.Iterator(this);
 };
 Through.prototype.pipe = function pipe(feed) {
-  return new Compose([this, feed]);
+  return feed.feed([this]);
+};
+Through.prototype.feed = function feed(sources) {
+  return new Compose(sources.concat(this));
 };
 Through.prototype.break = function breake(fn, async){
   return this.pipe(new Break(fn, async));
@@ -34,19 +37,21 @@ Through.prototype.map = function map(fn, async){
   return this.pipe(new Mapper(fn, async));
 };
 Through.prototype.take = function take(num, async){
+  const Take = require('../through/take');
   return this.pipe(new Take(num, async));
 };
 Through.prototype.each = function each(fn){
-  new Each(fn).feed(this.streams);
+  return this.pipe(new Each(fn));
 };
 Through.prototype.value = function value(async){
-  return new Value(async).feed(this.streams);
+  return this.pipe(new Value(async));
 };
 
 Through.Iterator = Iterator;
 
-function Iterator() {
+function Iterator(factory) {
+  this.async = factory.async;
 }
-Iterator.prototype.next = function Iterator_next(chunk) {
+Iterator.prototype.next = function next(chunk) {
   return chunk;
 };

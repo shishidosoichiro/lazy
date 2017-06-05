@@ -3,8 +3,8 @@
 module.exports = Chunk;
 
 function Chunk(data, index, next, end){
-  this.data = data;
-  this.index = index;
+  this.data = data || null;
+  this.index = index || 0;
   this.next = next == true;
   this.end = end == true;
 }

@@ -12,9 +12,9 @@ const endChunk = new Chunk.end();
 
 function Range(start, end, step, async) {
   Generate.call(this, null, async);
-  this.start = start = start || 0;
+  this.start = start === void 0 ? 0 : start;
   this.endValue = end;
-  this.step = step = step || 1;
+  this.step = step === void 0 ? 1 : step;
 }
 
 

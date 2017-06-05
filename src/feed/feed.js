@@ -10,6 +10,7 @@ inherits(Feed, Stream);
 function Feed(){
   Stream.call(this);
   this.sources = [];
+  this._iterators = [];
   this._onRead = this._onRead.bind(this);
 }
 Feed.prototype.iterators = function iterators(sources) {
@@ -21,8 +22,7 @@ Feed.prototype.iterators = function iterators(sources) {
   }
   return iterators;
 };
-Feed.prototype.fetch = function fetch() {
-  const iterators = this._iterators;
+Feed.prototype.fetch = function fetch(iterators) {
   const length = iterators.length;
   var i = -1;
   while (++i < length) {

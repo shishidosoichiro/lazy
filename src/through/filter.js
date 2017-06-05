@@ -8,9 +8,8 @@ const Through = require('./through');
 inherits(Filter, Through);
 
 function Filter(fn, async) {
-  Through.call(this);
+  Through.call(this, false);
   this.fn = fn;
-  this.async = async === true;
 }
 
 
@@ -18,8 +17,8 @@ Filter.Iterator = Iterator;
 inherits(Iterator, Through.Iterator);
 
 function Iterator(factory) {
-  Through.Iterator.call(this);
-  this.fn = this.fn || factory.fn;
+  Through.Iterator.call(this, factory);
+  if (this.fn === void 0) this.fn = factory.fn;
   this.index = 0;
 }
 Iterator.prototype.next = function next(chunk) {

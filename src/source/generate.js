@@ -11,7 +11,7 @@ inherits(Generate, Source);
 function Generate(fn, async) {
   Source.call(this);
   this.fn = this.fn;
-  this.async = async === true;
+  this.async = async == true;
 }
 
 Generate.Iterator = Iterator;
@@ -20,7 +20,7 @@ function Iterator(factory) {
   this.index = 0;
   this.ended = false;
   this.chunk = new Chunk();
-  this.fn = this.fn || factory.fn;
+  if (this.fn === void 0) this.fn = factory.fn;
   this.async = factory.async;
   if (factory.async) this._onRead = this._onRead.bind(this);
 }
