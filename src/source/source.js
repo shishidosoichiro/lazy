@@ -25,7 +25,7 @@ Source.prototype.iterator = function iterator() {
   return new this.constructor.Iterator(this);
 };
 Source.prototype.pipe = function pipe(feed) {
-  return new Compose([this, feed]);
+  return feed.feed([this]);
 };
 Source.prototype.break = function breake(fn, async){
   return this.pipe(new Break(fn, async));

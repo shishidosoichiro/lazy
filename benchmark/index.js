@@ -19,26 +19,26 @@ const Filter = require('../src/through/filter');
 const Each = require('../src/feed/each');
 
 // settings
-const max = 27000;
+const max = 22000;
 const head = 100;
 const options = {
   VanillaJS: false,
   LazyJS: false,
-  Lodash: false,
-  LazyOld: true,
+  Lodash: true,
+  LazyOld: false,
   Lazy: true,
-  Lazy2: true,
+  LazyChain: true,
   Lazy3: false,
   LazyAsync: false,
   PullStream: false
 }
 
 // test
-testLazy2(result => {
+testLazyChain(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })
-testLazy2(result => {
+testLazyChain(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })
@@ -50,7 +50,7 @@ if (options.LazyJS)     suite.add('LazyJS', testLazyJS);
 if (options.Lodash)     suite.add('Lodash', testLodash);
 if (options.LazyOld)    suite.add('LazyOld', testLazyOld);
 if (options.Lazy)       suite.add('Lazy', testLazy);
-if (options.Lazy2)      suite.add('Lazy2', testLazy2);
+if (options.LazyChain)      suite.add('LazyChain', testLazyChain);
 if (options.Lazy3)      suite.add('Lazy3', testLazy3);
 if (options.LazyAsync)  suite.add('LazyAsync', testLazyAsync);
 if (options.PullStream) suite.add('PullStream', testPullStream);
@@ -117,7 +117,7 @@ function testLazy(callback) {
   ])
   callback && callback(result)
 }
-function testLazy2(callback) {
+function testLazyChain(callback) {
   const result = [];
   new Range(0, max)
   .filter(isSquareNumber)

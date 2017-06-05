@@ -5,12 +5,8 @@ module.exports = Through;
 const inherits = require('util').inherits;
 const Stream = require('../stream');
 const Compose = require('./compose');
-//const Break = require('../through/break');
-//const Filter = require('../through/filter');
-//const Map = require('../through/map');
-//const Take = require('../through/take');
 const Each = require('../feed/each');
-//const Value = require('../feed/value');
+const Value = require('../feed/value');
 
 inherits(Through, Stream);
 
@@ -28,13 +24,16 @@ Through.prototype.feed = function feed(sources) {
   return new Compose(sources.concat(this));
 };
 Through.prototype.break = function breake(fn, async){
+  const Break = require('../through/break');
   return this.pipe(new Break(fn, async));
 };
 Through.prototype.filter = function filter(fn, async){
+  const Filter = require('../through/filter');
   return this.pipe(new Filter(fn, async));
 };
 Through.prototype.map = function map(fn, async){
-  return this.pipe(new Mapper(fn, async));
+  const Map = require('../through/map');
+  return this.pipe(new Map(fn, async));
 };
 Through.prototype.take = function take(num, async){
   const Take = require('../through/take');
