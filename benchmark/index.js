@@ -19,7 +19,7 @@ const Filter = require('../src/through/filter');
 const Each = require('../src/feed/each');
 
 // settings
-const max = 22000;
+const max = 20000;
 const head = 100;
 const options = {
   VanillaJS: false,
@@ -28,17 +28,18 @@ const options = {
   LazyOld: false,
   Lazy: true,
   LazyChain: true,
+  LazyPiping: true,
   Lazy3: false,
   LazyAsync: false,
   PullStream: false
 }
 
 // test
-testLazyChain(result => {
+testLazyPiping(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })
-testLazyChain(result => {
+testLazyPiping(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })
@@ -50,7 +51,8 @@ if (options.LazyJS)     suite.add('LazyJS', testLazyJS);
 if (options.Lodash)     suite.add('Lodash', testLodash);
 if (options.LazyOld)    suite.add('LazyOld', testLazyOld);
 if (options.Lazy)       suite.add('Lazy', testLazy);
-if (options.LazyChain)      suite.add('LazyChain', testLazyChain);
+if (options.LazyChain)  suite.add('LazyChain', testLazyChain);
+if (options.LazyPiping) suite.add('LazyPiping', testLazyPiping);
 if (options.Lazy3)      suite.add('Lazy3', testLazy3);
 if (options.LazyAsync)  suite.add('LazyAsync', testLazyAsync);
 if (options.PullStream) suite.add('PullStream', testPullStream);
@@ -123,6 +125,14 @@ function testLazyChain(callback) {
   .filter(isSquareNumber)
   .take(head)
   .each(push(result))
+  callback && callback(result)
+}
+function testLazyPiping(callback) {
+  const result = [];
+  new Range(0, max)
+  .pipe(new Filter(isSquareNumber))
+  .pipe(new Take(head))
+  .pipe(new Each(push(result)))
   callback && callback(result)
 }
 function testLazy3(callback) {
