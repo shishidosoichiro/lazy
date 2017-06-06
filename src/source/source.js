@@ -40,8 +40,8 @@ Source.prototype.take = function take(max){
   return this.pipe(new Take(max));
 };
 Source.prototype.each = function each(fn){
-  new Each(fn).feed(this);
+  return this.pipe(new Each(fn));
 };
 Source.prototype.value = function value(async){
-  new Value(async).feed(this);
+  return this.pipe(new Value(async));
 };

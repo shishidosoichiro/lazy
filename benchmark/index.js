@@ -19,7 +19,7 @@ const Filter = require('../src/through/filter');
 const Each = require('../src/feed/each');
 
 // settings
-const max = 20000;
+const max = 23000;
 const head = 100;
 const options = {
   VanillaJS: false,
@@ -28,18 +28,18 @@ const options = {
   LazyOld: false,
   Lazy: true,
   LazyChain: true,
-  LazyPiping: true,
+  LazyPiping: false,
   Lazy3: false,
   LazyAsync: false,
   PullStream: false
 }
 
 // test
-testLazyPiping(result => {
+testLazyChain(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })
-testLazyPiping(result => {
+testLazyChain(result => {
   console.log(result.join(', '));
   console.log(result.length);
 })

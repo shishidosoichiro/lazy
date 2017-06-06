@@ -5,12 +5,6 @@ module.exports = Compose;
 const inherits = require('util').inherits;
 const isAsync = require('../util').isAsync;
 const Through = require('./through');
-const Break = require('./break');
-const Filter = require('./filter');
-const Map = require('./map');
-const Take = require('./take');
-const Each = require('../feed/each');
-const Value = require('../feed/value');
 
 inherits(Compose, Through);
 

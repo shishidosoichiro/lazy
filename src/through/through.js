@@ -4,7 +4,6 @@ module.exports = Through;
 
 const inherits = require('util').inherits;
 const Stream = require('../stream');
-const Compose = require('./compose');
 const Each = require('../feed/each');
 const Value = require('../feed/value');
 
@@ -21,6 +20,7 @@ Through.prototype.pipe = function pipe(feed) {
   return feed.feed([this]);
 };
 Through.prototype.feed = function feed(sources) {
+  const Compose = require('./compose');
   return new Compose(sources.concat(this));
 };
 Through.prototype.break = function breake(fn, async){
